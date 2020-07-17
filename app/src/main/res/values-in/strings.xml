@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Github User App</string>
+    <string name="search_label">Pencarian Pengguna Github</string>
+    <string name="activity_favorite">Pengguna Favorit</string>
+    <string name="detail_label">Detail Pengguna</string>
+    <string name="description_avatar">Deskripsi Avatar</string>
+    <string name="menu_language_settings">Pengaturan Bahasa</string>
+    <string name="menu_favorite">Favorit</string>
+    <string name="search_hint">Username</string>
+    <string name="txt_repository">Repositori</string>
+    <string name="txt_follower">Pengikut</string>
+    <string name="txt_following">Mengikuti</string>
+    <string name="tab_text_1">Pengikut</string>
+    <string name="tab_text_2">Mengikuti</string>
+
+    // Pengingat Harian
+    <string name="daily_reminder">Pengingat Harian</string>
+    <string name="one_time_alarm">Alarm Satu Kali</string>
+    <string name="alarm_date">Tanggal Alarm</string>
+    <string name="set_one_time_alarm">Mengatur Satu Kali Alarm</string>
+    <string name="alarm_message">Pesan Alarm</string>
+    <string name="repeating_alarm">Perulangan Alarm</string>
+    <string name="set_repeating_alarm">Mengatur Perulangan Alarm</string>
+    <string name="cancel_alarm">Batalkan Alarm</string>
+    <string name="alarm_time">Waktu Alarm</string>
+</resources>
