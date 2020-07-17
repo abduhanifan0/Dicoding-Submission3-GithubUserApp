@@ -1,4 +1,4 @@
-package com.abduhanifan.dicoding.githubsearchuser.adapter
+package com.abduhanifan.dicoding.githubuserapp.adapter
 
 import android.content.Context
 import androidx.annotation.Nullable
@@ -6,9 +6,9 @@ import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import com.abduhanifan.dicoding.githubsearchuser.FollowerFragment
-import com.abduhanifan.dicoding.githubsearchuser.FollowingFragment
-import com.abduhanifan.dicoding.githubsearchuser.R
+import com.abduhanifan.dicoding.githubuserapp.FollowerFragment
+import com.abduhanifan.dicoding.githubuserapp.FollowingFragment
+import com.abduhanifan.dicoding.githubuserapp.R
 
 class TabsPagerAdapter(private val mContext: Context, fm: FragmentManager) :
     FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {

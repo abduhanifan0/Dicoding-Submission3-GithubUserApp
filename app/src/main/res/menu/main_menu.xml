@@ -9,12 +9,6 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/menu_reminder"
-        android:title="@string/daily_reminder"
-        android:icon="@drawable/ic_baseline_access_time_24"
-        app:showAsAction="ifRoom" />
-
-    <item
         android:id="@+id/menu_setting"
         android:icon="@drawable/ic_settings_white_24dp"
         android:title="@string/menu_language_settings"

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Github User App</string>
-    <string name="search_label">Pencarian Pengguna Github</string>
+    <string name="search_label">Pengguna Github</string>
     <string name="activity_favorite">Pengguna Favorit</string>
     <string name="detail_label">Detail Pengguna</string>
     <string name="description_avatar">Deskripsi Avatar</string>
@@ -16,12 +16,7 @@
 
     // Pengingat Harian
     <string name="daily_reminder">Pengingat Harian</string>
-    <string name="one_time_alarm">Alarm Satu Kali</string>
-    <string name="alarm_date">Tanggal Alarm</string>
-    <string name="set_one_time_alarm">Mengatur Satu Kali Alarm</string>
-    <string name="alarm_message">Pesan Alarm</string>
-    <string name="repeating_alarm">Perulangan Alarm</string>
-    <string name="set_repeating_alarm">Mengatur Perulangan Alarm</string>
-    <string name="cancel_alarm">Batalkan Alarm</string>
-    <string name="alarm_time">Waktu Alarm</string>
+    <string name="on">Aktif</string>
+    <string name="off">Mati</string>
+    <string name="setting">Pengaturan</string>
 </resources>

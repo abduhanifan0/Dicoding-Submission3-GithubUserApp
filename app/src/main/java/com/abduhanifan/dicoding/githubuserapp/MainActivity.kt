@@ -2,7 +2,6 @@ package com.abduhanifan.dicoding.githubuserapp
 
 import android.content.Intent
 import android.os.Bundle
-import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -79,17 +78,12 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_setting -> {
-                val intent = Intent(Settings.ACTION_LOCALE_SETTINGS)
+                val intent = Intent(this, SettingActivity::class.java)
                 startActivity(intent)
                 true
             }
             R.id.menu_favorite -> {
                 val intent = Intent(this, FavoriteActivity::class.java)
-                startActivity(intent)
-                true
-            }
-            R.id.menu_reminder -> {
-                val intent = Intent(this, ReminderActivity::class.java)
                 startActivity(intent)
                 true
             }

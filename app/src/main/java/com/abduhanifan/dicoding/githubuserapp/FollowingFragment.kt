@@ -1,4 +1,4 @@
-package com.abduhanifan.dicoding.githubsearchuser
+package com.abduhanifan.dicoding.githubuserapp
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,9 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.abduhanifan.dicoding.githubsearchuser.adapter.FollowingAdapter
-import com.abduhanifan.dicoding.githubsearchuser.model.UserItem
-import com.abduhanifan.dicoding.githubsearchuser.viewModel.FollowingViewModel
+import com.abduhanifan.dicoding.githubuserapp.adapter.FollowingAdapter
+import com.abduhanifan.dicoding.githubuserapp.model.UserItem
+import com.abduhanifan.dicoding.githubuserapp.viewModel.FollowingViewModel
 import kotlinx.android.synthetic.main.fragment_following.*
 
 class FollowingFragment : Fragment() {

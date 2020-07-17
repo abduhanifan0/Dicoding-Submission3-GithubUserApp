@@ -1,5 +1,6 @@
 package com.abduhanifan.dicoding.githubuserapp.alarm
 
+import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -9,28 +10,23 @@ import android.content.Context
 import android.content.Intent
 import android.media.RingtoneManager
 import android.os.Build
-import android.util.Log
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.abduhanifan.dicoding.githubuserapp.R
-import java.text.ParseException
-import java.text.SimpleDateFormat
 import java.util.*
 
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class AlarmReceiver : BroadcastReceiver() {
 
     companion object {
         const val TYPE_ONE_TIME = "Alarm satu kali"
-        const val TYPE_REPEATING = "Let's find popular user on Github!"
+        const val TYPE_REPEATING = "Mari temukan pengguna populer di Github"
         const val EXTRA_MESSAGE = "message"
         const val EXTRA_TYPE = "type"
 
         private const val ID_ONETIME = 100
         private const val ID_REPEATING = 101
-
-        private const val DATE_FORMAT = "yyyy-MM-dd"
-        private const val TIME_FORMAT = "HH:mm"
     }
 
     override fun onReceive(context: Context, intent: Intent) {
@@ -40,16 +36,11 @@ class AlarmReceiver : BroadcastReceiver() {
         val title = if (type.equals(TYPE_ONE_TIME, ignoreCase = true)) TYPE_ONE_TIME else TYPE_REPEATING
         val notifyId= if (type.equals(TYPE_ONE_TIME, ignoreCase = true)) ID_ONETIME else ID_REPEATING
 
-        showToast(context, title, message)
-
         showAlarmNotification(context, message, title, notifyId)
     }
 
-        private fun showToast(context: Context, title: String, message: String?) {
-            Toast.makeText(context, "$title : $message", Toast.LENGTH_SHORT).show()
-        }
-
     // Menampilkan notifikasi
+    @SuppressLint("ObsoleteSdkInt")
     private fun showAlarmNotification(context: Context, title: String, message: String, notifyId: Int) {
         val channelID = "Channel_1"
         val channelNAME = "AlarmManager channel"
@@ -82,53 +73,22 @@ class AlarmReceiver : BroadcastReceiver() {
         notificationManagerCompat.notify(notifyId, notification)
     }
 
-    // Mengatur alarm one time
-    fun setOneTimeAlarm(context: Context, type: String, date: String, time: String, message: String) {
-        if (isDateInvalid(date, DATE_FORMAT) || isDateInvalid(time, TIME_FORMAT)) return
-
-        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val intent = Intent(context, AlarmReceiver::class.java)
-            intent.putExtra(EXTRA_MESSAGE, message)
-            intent.putExtra(EXTRA_TYPE, type)
-
-        Log.e("ONE TIME", "$date $time")
-        val dateArray = date.split("-").toTypedArray()
-        val timeArray = time.split(":").toTypedArray()
-
-        val calendar = Calendar.getInstance()
-            calendar.set(Calendar.YEAR, Integer.parseInt(dateArray[0]))
-            calendar.set(Calendar.MONTH, Integer.parseInt(dateArray[1]) - 1)
-            calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(dateArray[2]))
-            calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(timeArray[0]))
-            calendar.set(Calendar.MINUTE, Integer.parseInt(timeArray[1]))
-            calendar.set(Calendar.SECOND, 0)
-
-        val pendingIntent = PendingIntent.getBroadcast(context, ID_ONETIME, intent, 0)
-            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
-
-        Toast.makeText(context, "Alarm satu kali diatur", Toast.LENGTH_SHORT).show()
-    }
-
     // Menjalankan alarm repeating
-    fun setRepeatingAlarm(context: Context, type: String, time: String, message: String) {
-        if (isDateInvalid(time, TIME_FORMAT)) return
-
+    fun setRepeatingAlarm(context: Context, message: String) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(context, AlarmReceiver::class.java)
             intent.putExtra(EXTRA_MESSAGE, message)
-            intent.putExtra(EXTRA_TYPE, type)
-
-        val timeArray = time.split(":".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+            intent.putExtra(EXTRA_TYPE, TYPE_REPEATING)
 
         val calendar = Calendar.getInstance()
-            calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(timeArray[0]))
-            calendar.set(Calendar.MINUTE, Integer.parseInt(timeArray[1]))
+            calendar.set(Calendar.HOUR_OF_DAY, 9)
+            calendar.set(Calendar.MINUTE, 0)
             calendar.set(Calendar.SECOND, 0)
 
         val pendingIntent = PendingIntent.getBroadcast(context, ID_REPEATING, intent, 0)
             alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, AlarmManager.INTERVAL_DAY, pendingIntent)
 
-        Toast.makeText(context, "Alarm berulang diatur", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "Repeating Alarm pada pukul 09.00 AM", Toast.LENGTH_SHORT).show()
     }
 
     // Membatalkan Repeating Alarm
@@ -142,17 +102,5 @@ class AlarmReceiver : BroadcastReceiver() {
         alarmManager.cancel(pendingIntent)
 
         Toast.makeText(context, "Repeating Alarm dibatalkan", Toast.LENGTH_SHORT).show()
-    }
-
-    // Validasi tanggal dan waktu
-    private fun isDateInvalid(date: String, format: String): Boolean {
-        return try {
-            val df = SimpleDateFormat(format, Locale.getDefault())
-            df.isLenient = false
-            df.parse(date)
-            false
-        } catch (e: ParseException) {
-            true
-        }
     }
 }

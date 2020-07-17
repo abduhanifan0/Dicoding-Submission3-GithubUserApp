@@ -4,12 +4,10 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.abduhanifan.dicoding.githubuserapp.model.DetailUserItem
 import com.abduhanifan.dicoding.githubuserapp.model.UserItem
 import com.loopj.android.http.AsyncHttpClient
 import com.loopj.android.http.AsyncHttpResponseHandler
 import cz.msebera.android.httpclient.Header
-import kotlinx.android.synthetic.main.activity_detail.*
 import org.json.JSONObject
 
 class DetailViewModel : ViewModel() {
@@ -39,7 +37,7 @@ class DetailViewModel : ViewModel() {
                     userItem.id = responseObject.getInt("id")
                     userItem.login = responseObject.getString("login")
                     userItem.avatar_url = responseObject.getString("avatar_url")
-                    userItem.username = responseObject.getString("name")
+                    userItem.name = responseObject.getString("name")
                     userItem.company = responseObject.getString("company")
                     userItem.location = responseObject.getString("location")
                     userItem.public_repos = responseObject.getString("public_repos")

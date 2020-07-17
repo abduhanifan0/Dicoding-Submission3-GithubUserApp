@@ -1,4 +1,4 @@
-package com.abduhanifan.dicoding.githubsearchuser.model
+package com.abduhanifan.dicoding.githubuserapp.model
 
 data class FollowingItem(
     var id: Int = 0,

@@ -1,11 +1,11 @@
-package com.abduhanifan.dicoding.githubsearchuser.adapter
+package com.abduhanifan.dicoding.githubuserapp.adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.abduhanifan.dicoding.githubsearchuser.R
-import com.abduhanifan.dicoding.githubsearchuser.model.FollowingItem
+import com.abduhanifan.dicoding.githubuserapp.R
+import com.abduhanifan.dicoding.githubuserapp.model.FollowingItem
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.item_following.view.*

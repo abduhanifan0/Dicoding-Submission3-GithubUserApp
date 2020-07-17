@@ -4,22 +4,17 @@ import android.content.ContentValues
 import android.content.Intent
 import android.database.sqlite.SQLiteConstraintException
 import android.os.Bundle
-import android.provider.Settings
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.abduhanifan.dicoding.githubuserapp.adapter.TabsPagerAdapter
 import com.abduhanifan.dicoding.githubuserapp.db.DatabaseContract.FavoriteColumns.Companion.AVATAR_URL
-import com.abduhanifan.dicoding.githubuserapp.db.FavoriteHelper
-import com.abduhanifan.dicoding.githubuserapp.viewModel.DetailViewModel
 import com.abduhanifan.dicoding.githubuserapp.db.DatabaseContract.FavoriteColumns.Companion.LOGIN
 import com.abduhanifan.dicoding.githubuserapp.db.DatabaseContract.FavoriteColumns.Companion.TYPE
-import com.abduhanifan.dicoding.githubuserapp.model.DetailUserItem
+import com.abduhanifan.dicoding.githubuserapp.db.FavoriteHelper
 import com.abduhanifan.dicoding.githubuserapp.model.UserItem
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -215,7 +210,7 @@ class DetailActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_setting -> {
-                val intent = Intent(Settings.ACTION_LOCALE_SETTINGS)
+                val intent = Intent(this, SettingActivity::class.java)
                 startActivity(intent)
                 true
             }
