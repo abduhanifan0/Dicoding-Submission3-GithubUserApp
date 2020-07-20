@@ -2,9 +2,9 @@ package com.abduhanifan.dicoding.githubuserapp.helper
 
 import android.database.Cursor
 import com.abduhanifan.dicoding.githubuserapp.db.DatabaseContract.FavoriteColumns.Companion.AVATAR_URL
-import com.abduhanifan.dicoding.githubuserapp.db.DatabaseContract.FavoriteColumns.Companion._ID
 import com.abduhanifan.dicoding.githubuserapp.db.DatabaseContract.FavoriteColumns.Companion.LOGIN
 import com.abduhanifan.dicoding.githubuserapp.db.DatabaseContract.FavoriteColumns.Companion.TYPE
+import com.abduhanifan.dicoding.githubuserapp.db.DatabaseContract.FavoriteColumns.Companion._ID
 import com.abduhanifan.dicoding.githubuserapp.model.FavoriteItem
 
 object MappingHelper {
@@ -22,5 +22,18 @@ object MappingHelper {
             }
         }
         return favoriteItemList
+    }
+
+    fun mapCursorToObject(favoriteCursor: Cursor?): FavoriteItem {
+        var favorite = FavoriteItem()
+        favoriteCursor?.apply {
+            moveToFirst()
+            val id = getInt(getColumnIndexOrThrow(_ID))
+            val login = getString(getColumnIndexOrThrow(LOGIN))
+            val avatarUrl = getString(getColumnIndexOrThrow(AVATAR_URL))
+            val type = getString(getColumnIndexOrThrow(TYPE))
+            favorite = FavoriteItem(id, login, avatarUrl, type)
+        }
+        return favorite
     }
 }

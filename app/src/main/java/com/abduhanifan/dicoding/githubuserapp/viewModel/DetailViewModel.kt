@@ -4,18 +4,18 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.abduhanifan.dicoding.githubuserapp.model.UserItem
+import com.abduhanifan.dicoding.githubuserapp.model.DetailUserItem
 import com.loopj.android.http.AsyncHttpClient
 import com.loopj.android.http.AsyncHttpResponseHandler
 import cz.msebera.android.httpclient.Header
 import org.json.JSONObject
 
 class DetailViewModel : ViewModel() {
-    private val listDetailUser = MutableLiveData<ArrayList<UserItem>>()
+    private val listDetailUser = MutableLiveData<ArrayList<DetailUserItem>>()
 
     fun setDetailUser(username: String) {
         //Request API
-        val listItem = ArrayList<UserItem>()
+        val listItem = ArrayList<DetailUserItem>()
 
         val url = "https://api.github.com/users/$username"
 
@@ -33,17 +33,17 @@ class DetailViewModel : ViewModel() {
                     val result = String(responseBody)
                     val responseObject = JSONObject(result)
 
-                    val userItem = UserItem()
-                    userItem.id = responseObject.getInt("id")
-                    userItem.login = responseObject.getString("login")
-                    userItem.avatar_url = responseObject.getString("avatar_url")
-                    userItem.name = responseObject.getString("name")
-                    userItem.company = responseObject.getString("company")
-                    userItem.location = responseObject.getString("location")
-                    userItem.public_repos = responseObject.getString("public_repos")
-                    userItem.followers = responseObject.getString("followers")
-                    userItem.following = responseObject.getString("following")
-                    listItem.add(userItem)
+                    val detailUserItem = DetailUserItem()
+                    detailUserItem.id = responseObject.getInt("id")
+                    detailUserItem.login = responseObject.getString("login")
+                    detailUserItem.avatar_url = responseObject.getString("avatar_url")
+                    detailUserItem.name = responseObject.getString("name")
+                    detailUserItem.company = responseObject.getString("company")
+                    detailUserItem.location = responseObject.getString("location")
+                    detailUserItem.public_repos = responseObject.getString("public_repos")
+                    detailUserItem.followers = responseObject.getString("followers")
+                    detailUserItem.following = responseObject.getString("following")
+                    listItem.add(detailUserItem)
 
                     listDetailUser.postValue(listItem)
                 } catch (e: Exception) {
@@ -62,7 +62,7 @@ class DetailViewModel : ViewModel() {
         })
     }
 
-    fun getDetailUser(): LiveData<ArrayList<UserItem>> {
+    fun getDetailUser(): LiveData<ArrayList<DetailUserItem>> {
         return listDetailUser
     }
 }

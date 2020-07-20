@@ -5,9 +5,8 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.provider.BaseColumns._ID
-
-import com.abduhanifan.dicoding.githubuserapp.db.DatabaseContract.FavoriteColumns.Companion.TABLE_NAME
 import com.abduhanifan.dicoding.githubuserapp.db.DatabaseContract.FavoriteColumns.Companion.LOGIN
+import com.abduhanifan.dicoding.githubuserapp.db.DatabaseContract.FavoriteColumns.Companion.TABLE_NAME
 import java.sql.SQLException
 
 class FavoriteHelper (context: Context) {
@@ -70,7 +69,7 @@ class FavoriteHelper (context: Context) {
     }
 
     // Metode untuk menghapus data
-    fun deleteById(login: String): Int {
+    fun deleteByLogin(login: String): Int {
         return database.delete(DATABASE_TABLE, "$LOGIN = '$login'", null)
     }
 }

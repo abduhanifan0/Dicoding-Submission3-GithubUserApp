@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.abduhanifan.dicoding.githubuserapp.adapter.TabsPagerAdapter
@@ -15,6 +14,7 @@ import com.abduhanifan.dicoding.githubuserapp.db.DatabaseContract.FavoriteColumn
 import com.abduhanifan.dicoding.githubuserapp.db.DatabaseContract.FavoriteColumns.Companion.LOGIN
 import com.abduhanifan.dicoding.githubuserapp.db.DatabaseContract.FavoriteColumns.Companion.TYPE
 import com.abduhanifan.dicoding.githubuserapp.db.FavoriteHelper
+import com.abduhanifan.dicoding.githubuserapp.model.DetailUserItem
 import com.abduhanifan.dicoding.githubuserapp.model.UserItem
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -28,6 +28,7 @@ import org.json.JSONObject
 
 class DetailActivity : AppCompatActivity() {
 
+//    private val listDetailUser = MutableLiveData<ArrayList<DetailUserItem>>()
 //    private lateinit var detailViewModel: DetailViewModel
     private lateinit var favoriteHelper: FavoriteHelper
 
@@ -63,15 +64,21 @@ class DetailActivity : AppCompatActivity() {
             .apply(RequestOptions().override(86, 86))
             .into(imgAvatar)
 
-//        val detailItem = intent.getStringExtra(EXTRA_STATE) as DetailUserItem
-//        detailViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())
-//            .get(DetailViewModel::class.java)
-
-//        detailViewModel.setDetailUser(detailItem.login.toString())
-
+//        val username = intent?.getStringExtra(EXTRA_LOGIN) as DetailUserItem
+//        detailViewModel.setDetailUser(username.login.toString())
+//
 //        detailViewModel.getDetailUser().observe(this, Observer { detailUserItem ->
 //            if (detailUserItem != null) {
-//                    setDetail(detailItem)
+//                Glide.with(this)
+//                    .load(detailUserItem[0].avatar_url)
+//                    .apply(RequestOptions().override(86, 86))
+//                    .into(imgAvatar)
+//                textName.text = detailUserItem[0].name.toString()
+//                textCompany.text = detailUserItem[0].company.toString()
+//                textLocation.text = detailUserItem[0].location.toString()
+//                textRepository.text = detailUserItem[0].public_repos.toString()
+//                textFollower.text = detailUserItem[0].followers.toString()
+//                textFollowing.text = detailUserItem[0].following.toString()
 //            }
 //        })
 
@@ -80,6 +87,8 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun getDetailUser(username: String) {
+        val listItem = ArrayList<DetailUserItem>()
+
         val url = "https://api.github.com/users/$username"
 
         val client = AsyncHttpClient()
@@ -92,24 +101,22 @@ class DetailActivity : AppCompatActivity() {
                 responseBody: ByteArray
             ) {
                 try {
-
+                    //Parsing json
                     val result = String(responseBody)
                     val jsonObject = JSONObject(result)
+                    val detailUserItem = DetailUserItem()
 
-                    val tvDetailName: TextView = findViewById(R.id.textName)
-                    val tvDetailFollowers: TextView = findViewById(R.id.textFollower)
-                    val tvDetailFollowing: TextView = findViewById(R.id.textFollowing)
-                    val tvDetailCompany: TextView = findViewById(R.id.textCompany)
-                    val tvDetailLocation: TextView = findViewById(R.id.textLocation)
-                    val tvDetailRepository: TextView = findViewById(R.id.textRepository)
+                    detailUserItem.apply {
+                        textName.text = jsonObject.getString("name")
+                        textLocation.text = jsonObject.getString("location")
+                        textCompany.text = jsonObject.getString("company")
+                        textRepository.text = jsonObject.getString("public_repos")
+                        textFollower.text = jsonObject.getString("followers")
+                        textFollowing.text = jsonObject.getString("following")
+                    }
+                    listItem.add(detailUserItem)
 
-                    tvDetailName.text = jsonObject.getString("name").toString()
-                    tvDetailLocation.text = jsonObject.getString("location").toString()
-                    tvDetailCompany.text = jsonObject.getString("company").toString()
-                    tvDetailRepository.text = jsonObject.getString("public_repos").toString()
-                    tvDetailFollowers.text = jsonObject.getInt("followers").toString()
-                    tvDetailFollowing.text = jsonObject.getInt("following").toString()
-
+//                    listDetailUser.postValue(listItem)
                 } catch (e: Exception) {
                     Log.d("Exception", e.message.toString())
                 }
@@ -148,7 +155,7 @@ class DetailActivity : AppCompatActivity() {
 
     private fun favoriteState() {
         username = intent?.getStringExtra(EXTRA_LOGIN).toString()
-        val result =favoriteHelper.queryByLogin(username)
+        val result = favoriteHelper.queryByLogin(username)
         val favorite = (1 .. result.count).map {
             result.apply {
                 moveToNext()
@@ -173,7 +180,7 @@ class DetailActivity : AppCompatActivity() {
             favoriteHelper.insert(values)
 
             showSnackbarMessage("Menambahkan Favorite User")
-            Log.d("Masukan Nilai ", values.toString())
+            Log.d("Masukan Nilai ::::: ", values.toString())
         } catch (e: SQLiteConstraintException) {
             showSnackbarMessage(""+e.localizedMessage)
         }
@@ -183,17 +190,25 @@ class DetailActivity : AppCompatActivity() {
     private fun removeFavorite() {
         try {
             username = intent?.getStringExtra(EXTRA_LOGIN).toString()
-            val result =favoriteHelper.deleteById(username)
+            val result = favoriteHelper.deleteByLogin(username)
 
             showSnackbarMessage("Menghapus Favorite User")
-            Log.d("Hapus nilai ", result.toString())
+            Log.d("Hapus nilai ::::: ", result.toString())
         } catch (e: SQLiteConstraintException) {
             showSnackbarMessage(""+e.localizedMessage)
         }
     }
 
+//    private fun setFavorite() {
+//            if (statusFavorite) {
+//                btnFavoriteUser.setImageResource(R.drawable.ic_baseline_favorite_24)
+//            } else {
+//                btnFavoriteUser.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+//            }
+//    }
+
     private fun setFavorite() {
-        if (statusFavorite){
+        if (statusFavorite) {
             menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_baseline_favorite_24)
         } else {
             menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_baseline_favorite_border_24)

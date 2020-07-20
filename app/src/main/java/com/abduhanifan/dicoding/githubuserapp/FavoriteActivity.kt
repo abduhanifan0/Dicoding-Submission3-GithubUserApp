@@ -1,19 +1,16 @@
 package com.abduhanifan.dicoding.githubuserapp
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.abduhanifan.dicoding.githubuserapp.R
+import com.abduhanifan.dicoding.githubuserapp.DetailActivity
 import com.abduhanifan.dicoding.githubuserapp.adapter.FavoriteAdapter
 import com.abduhanifan.dicoding.githubuserapp.db.FavoriteHelper
 import com.abduhanifan.dicoding.githubuserapp.helper.MappingHelper
 import com.abduhanifan.dicoding.githubuserapp.model.FavoriteItem
-import com.abduhanifan.dicoding.githubuserapp.DetailActivity
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_favorite.*
-import kotlinx.android.synthetic.main.item_favorite.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
@@ -43,7 +40,7 @@ class FavoriteActivity : AppCompatActivity() {
         favoriteHelper.open()
 
         if (savedInstanceState == null) {
-            loadFavoriteAsync()           // Proses ambil data
+            loadFavoriteAsync()              // Proses ambil data
         } else {
             val list = savedInstanceState.getParcelableArrayList<FavoriteItem>(EXTRA_LOGIN)
             if (list != null) {
@@ -79,12 +76,12 @@ class FavoriteActivity : AppCompatActivity() {
 
     private fun loadFavoriteAsync() {
         GlobalScope.launch(Dispatchers.Main) {
-            progressBar.visibility = View.VISIBLE
+//            progressBar.visibility = View.VISIBLE
             val deferredFavorite = async(Dispatchers.IO) {
                 val cursor = favoriteHelper.queryAll()
                 MappingHelper.mapCursorToArrayList(cursor)
             }
-            progressBar.visibility = View.INVISIBLE
+//            progressBar.visibility = View.INVISIBLE
             val favorite = deferredFavorite.await()
             if (favorite.size > 0) {
                 adapter.listFavorite = favorite
